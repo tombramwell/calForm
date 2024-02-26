@@ -149,7 +149,7 @@ export default function Home() {
             </fieldset>
 
             <fieldset>
-            <label htmlFor="entry.332270016" id="interest">I'm interested in sponsoring...</label>
+            <label htmlFor="entry.332270016" id="interest">I am interested in sponsoring...</label>
             <div className="form-checkbox">
                   <span>
                     <label htmlFor="Gym Membership (Thai Boxing)">Gym Membership (Thai Boxing)</label>
