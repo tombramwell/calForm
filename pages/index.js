@@ -196,6 +196,7 @@ export default function Home() {
                 onChange={handleInputData("entry.667021705")}
                 value={formData["entry.667021705"]}
                 autoComplete="false"
+                style="height: 100px; width: 100%;"
               ></textarea>
             </fieldset>
 
