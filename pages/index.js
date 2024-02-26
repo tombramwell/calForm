@@ -1,118 +1,209 @@
-import Image from "next/image";
+import { useState } from "react";
 import { Inter } from "next/font/google";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
+    const [submit, setSubmit] = useState(false);
+    const [formData, setFormData] = useState({
+      "entry.310829241": "",
+      "entry.1330483961": "",
+      "entry.2294100": "",
+      "entry.1696234116": "",
+      "entry.332270016-1": "",
+      "entry.332270016-2": "",
+      "entry.332270016-3": "",
+      "entry.332270016-4": "",
+      "entry.332270016-5": "",
+      "entry.332270016-6": "",
+      "entry.332270016-7": "",
+      "entry.332270016-8": "",
+      "entry.667021705": ""
+  })
+  const [option8ticked, setOption8ticked] = useState(false)
+  const [option7ticked, setOption7ticked] = useState(false)
+  const [option6ticked, setOption6ticked] = useState(false)
+  const [option5ticked, setOption5ticked] = useState(false)
+  const [option4ticked, setOption4ticked] = useState(false)
+  const [option3ticked, setOption3ticked] = useState(false)
+  const [option2ticked, setOption2ticked] = useState(false)
+  const [option1ticked, setOption1ticked] = useState(false)
+
+  const handleInputData = (input) => (e) => {
+    const { value } = e.target
+    // let value
+    // const checkedArr = []
+    // if (e.target.type !== 'checkbox') {
+    //   value = e.target.value
+    // } else {
+    //   const checkeds = document.getElementsByTagName('input');
+    //   for (let i = 0; i < checkeds.length; i++) {
+    //     if (checkeds[i].checked) {
+    //       checkedArr.push(checkeds[i].value)
+    //     }
+    //   }
+    //   value = checkedArr
+    //   console.log(checkedArr)
+    // }
+
+    setFormData((prevState) => ({
+      ...prevState,
+      [input]: value
+    }));
+  };
+
+  // const handleCheckboxChange = (input) => (e) => {
+  //   const { checked } = e.target;
+
+  //   if (checked) {
+  //     setDataArray((prevState) => [...prevState, e.target.value]);
+  //   } else {
+  //     setDataArray(dataArray[input].filter((item) => item !== e.target.value));
+  //   }
+  // }
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    setSubmit(true);
+
+    let checkboxes = document.getElementsByTagName('input');
+    var vals = ""
+    var boxesTicked = []
+    for ( var i=0; i < checkboxes.length; i++ ) {
+      if ( checkboxes[i].checked ) {
+        boxesTicked.push(checkboxes[i].value)
+      }
+    }
+
+    // let url = `https://docs.google.com/forms/d/e/1FAIpQLSfrwpT7lHkNQfrHk8MgdlNogs5riMFfAh5TfmEZQXoz3PQ8Gg/formResponse?entry.310829241=${formData["entry.310829241"]}&entry.2294100=${formData["entry.2294100"]}&entry.1330483961=${formData["entry.1330483961"]}&entry.1696234116=${formData["entry.1696234116"]}&entry.667021705=${formData["entry.667021705"]}&entry.332270016=${formData["entry.332270016-1"]}&entry.332270016=${formData["entry.332270016-2"]}&entry.332270016=${formData["entry.332270016-3"]}&entry.332270016=${formData["entry.332270016-4"]}&entry.332270016=${formData["entry.332270016-5"]}&entry.332270016=${formData["entry.332270016-6"]}&entry.332270016=${formData["entry.332270016-7"]}&entry.332270016=${formData["entry.332270016-8"]}`;
+    let url = `https://docs.google.com/forms/d/e/1FAIpQLSfrwpT7lHkNQfrHk8MgdlNogs5riMFfAh5TfmEZQXoz3PQ8Gg/formResponse?entry.310829241=${formData["entry.310829241"]}&entry.2294100=${formData["entry.2294100"]}&entry.1330483961=${formData["entry.1330483961"]}&entry.1696234116=${formData["entry.1696234116"]}&entry.667021705=${formData["entry.667021705"]}`
+
+    const res = await fetch(url, {
+      method: "POST",
+      mode: 'no-cors',
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      }
+    });
+  }
+  
   return (
-    <main
-      className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
-    >
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">pages/index.js</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
+    <main className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}>
+          <div className="contactFormWrapper">
+      <div className="formheader"></div>
+      <div className="formcontact">
+        {submit ? (
+          <div className="afterForm"><h4>Thanks for your enquiry!</h4>
+          <p>Callum and the team will be in touch soon.</p>
+          </div>
+        ) : (
+          <form onSubmit={handleSubmit} target="_self">
+            <fieldset>
+              <label htmlFor="entry.310829241">Your name</label>
+              <input
+                required
+                type="text"
+                name="entry.310829241"
+                id="entry.310829241"
+                onChange={handleInputData("entry.310829241")}
+                value={formData["entry.310829241"]}
+                autoComplete="false"
+              />
+            </fieldset>
+
+            <fieldset>
+              <label htmlFor="entry.2294100">Your email</label>
+              <input
+                required
+                type="email"
+                name="entry.2294100"
+                id="entry.2294100"
+                onChange={handleInputData("entry.2294100")}
+                value={formData["entry.2294100"]}
+                autoComplete="false"
+              />
+            </fieldset>
+
+            <fieldset>
+              <label htmlFor="entry.1330483961">Your phone number</label>
+              <input
+                type="number"
+                name="entry.1330483961"
+                id="entry.1330483961"
+                onChange={handleInputData("entry.1330483961")}
+                value={formData["entry.1330483961"]}
+                autoComplete="false"
+              />
+            </fieldset>
+
+            <fieldset>
+              <label htmlFor="entry.1696234116">Your business name</label>
+              <input
+                type="text"
+                name="entry.1696234116"
+                id="entry.1696234116"
+                onChange={handleInputData("entry.1696234116")}
+                value={formData["entry.1696234116"]}
+                autoComplete="false"
+              />
+            </fieldset>
+
+            <fieldset>
+            <label htmlFor="entry.332270016" id="interest">I'm interested in sponsoring...</label>
+            <div className="form-checkbox">
+                  <span>
+                    <label htmlFor="Gym Membership (Thai Boxing)">Gym Membership (Thai Boxing)</label>
+                    <input type="checkbox" name="entry.332270016-1" id="Gym Membership (Thai Boxing)" value="Gym Membership (Thai Boxing)" onChange={handleInputData("entry.332270016-1")} />
+                  </span>
+                  <span>
+                    <label htmlFor="Training Kit">Training Kit</label>
+                    <input type="checkbox" name="entry.332270016-2" id="Training Kit" value="Training Kit" onChange={handleInputData("entry.332270016-2")} />
+                  </span>
+                  <span>
+                    <label htmlFor="Vehicle">Vehicle</label>
+                    <input type="checkbox" name="entry.332270016-3" id="Vehicle" value="Vehicle" onChange={handleInputData("entry.332270016-3")} />
+                  </span>
+                  <span>
+                    <label htmlFor="Gym Membership Travel">Gym Membership Travel</label>
+                    <input type="checkbox" name="entry.332270016-4" id="Gym Membership Travel" value="Gym Membership Travel" onChange={handleInputData("entry.332270016-4")} />
+                  </span>
+                  <span>
+                    <label htmlFor="Fitness & Fight Travel">Fitness & Fight Travel</label>
+                    <input type="checkbox" name="entry.332270016-5" id="Fitness & Fight Travel" value="Fitness & Fight Travel" onChange={handleInputData("entry.332270016-5")} />
+                  </span>
+                  <span>
+                    <label htmlFor="Training Camp Meal Preps">Training Camp Meal Preps</label>
+                    <input type="checkbox" name="entry.332270016-6" id="Training Camp Meal Preps" value="Training Camp Meal Preps" onChange={handleInputData("entry.332270016-6")} />
+                  </span>
+                  <span>
+                    <label htmlFor="Supplements">Supplements</label>
+                    <input type="checkbox" name="entry.332270016-7" id="Supplements" value="Supplements" onChange={handleInputData("entry.332270016-7")} />
+                  </span>
+                  <span>
+                    <label htmlFor="Other">Other</label>
+                    <input type="checkbox" name="entry.332270016-8" id="Other" value="Other" onChange={handleInputData("entry.332270016-8")} />
+                  </span>
+                </div>
+            </fieldset>
+
+            <fieldset>
+            <label htmlFor="entry.667021705">Your message</label>
+              <textarea
+                name="entry.667021705"
+                id="entry.667021705"
+                rows="6"
+                cols="80"
+                onChange={handleInputData("entry.667021705")}
+                value={formData["entry.667021705"]}
+                autoComplete="false"
+              ></textarea>
+            </fieldset>
+
+            <button type="submit">Submit form</button>
+          </form>
+        )}
       </div>
-
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-full sm:before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full sm:after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700/10 after:dark:from-sky-900 after:dark:via-[#0141ff]/40 before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Discover and deploy boilerplate example Next.js&nbsp;projects.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50 text-balance`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
+    </div>
     </main>
   );
 }
